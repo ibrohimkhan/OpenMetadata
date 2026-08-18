@@ -119,6 +119,16 @@ class GreenplumSource(CommonDbSourceService, MultiDBSource):
             TableNameAndType(name=name, type_=RELKIND_MAP.get(relkind, TableType.Regular)) for name, relkind in result
         ]
 
+    def query_view_names_and_types(self, schema_name: str) -> Iterable[TableNameAndType]:
+        """Return regular and materialized views with their corresponding types."""
+        return [
+            TableNameAndType(name=name, type_=TableType.View)
+            for name in self.inspector.get_view_names(schema_name) or []
+        ] + [
+            TableNameAndType(name=name, type_=TableType.MaterializedView)
+            for name in self.inspector.get_materialized_view_names(schema_name) or []
+        ]
+
     def get_configured_database(self) -> Optional[str]:  # noqa: UP045
         if not self.service_connection.ingestAllDatabases:
             return self.service_connection.database
