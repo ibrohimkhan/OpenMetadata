@@ -1,0 +1,19 @@
+# Login whitelist for OpenMetadata.
+#
+# One principal per line, exactly as the person types it in the login form.
+# With AUTHENTICATION_USER_MAIL_ATTR=userPrincipalName that means the UPN.
+#
+# Blank lines and lines starting with '#' are ignored. Case and surrounding
+# spaces do not matter. A line without '@' is skipped and logged as malformed.
+#
+# The file is re-read within ten seconds of being saved — no restart needed.
+# If it is missing or unreadable, nobody new gets in: people who already have
+# an account in OpenMetadata keep working, everyone else is refused.
+#
+# Accounts listed in AUTHORIZER_ADMIN_PRINCIPALS are let through even when
+# absent here, so a broken file cannot lock the administrators out.
+#
+# Deleting a user in OpenMetadata revokes access immediately, whatever this
+# file says. Removing a line only prevents a new account from being created.
+
+kholmatov.i@eskhata.com
